@@ -1,0 +1,27 @@
+cc_library_headers {
+    name: "libcodec2_rk_store_headers",
+    vendor: true,
+    export_include_dirs: ["."],
+}
+
+cc_library_shared {
+    name: "libcodec2_rk_store",
+    vendor: true,
+    defaults: ["libcodec2-hidl-defaults"],
+
+    srcs: [
+        "C2RKPlatformSupport.cpp",
+        "C2RKComponentStore.cpp",
+    ],
+
+    shared_libs: [
+        "libmpp",
+        "libdmabufheap",
+        "libstagefright_foundation",
+    ],
+
+    header_libs: [
+        "libcodec2_internal",
+        "libcodec2_rk_osal_headers",
+    ],
+}

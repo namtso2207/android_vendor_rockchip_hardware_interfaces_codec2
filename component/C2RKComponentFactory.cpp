@@ -17,26 +17,26 @@
 #undef  ROCKCHIP_LOG_TAG
 #define ROCKCHIP_LOG_TAG    "C2RKComponentFactory"
 
-#include <C2PlatformSupport.h>
+#include <C2ComponentFactory.h>
 
+#include "C2RKPlatformSupport.h"
 #include "C2RKMpiDec.h"
 #include "C2RKMpiEnc.h"
-#include "C2RKMediaUtils.h"
 #include "C2RKLog.h"
-#include "C2RKVersion.h"
+
+using namespace android;
 
 extern "C" ::C2ComponentFactory* CreateRKCodec2Factory(std::string componentName) {
-    C2Component::kind_t kind;
+    C2RKComponentEntry *entry = NULL;
     C2ComponentFactory *factory = NULL;
 
-    c2_info("in version: %s", C2_GIT_BUILD_VERSION);
-
-    if (!C2RKMediaUtils::getKindFromComponentName(componentName, &kind)) {
-        c2_err("get kind from component name failed, componentName=%s", componentName.c_str());
+    entry = GetRKComponentEntry(componentName);
+    if (!entry) {
+        c2_err("failed to get component entry from name %s", componentName.c_str());
         goto __FAILED;
     }
 
-    switch (kind) {
+    switch (entry->kind) {
       case C2Component::KIND_DECODER:
         factory = ::android::CreateRKMpiDecFactory(componentName);
       break;
@@ -44,7 +44,7 @@ extern "C" ::C2ComponentFactory* CreateRKCodec2Factory(std::string componentName
         factory = ::android::CreateRKMpiEncFactory(componentName);
       break;
       default:
-        c2_err("the kind is unsupport for create codec2 factory, kind=%d", kind);
+        c2_err("the kind %d is unsupport for create codec2 factory", entry->kind);
         goto __FAILED;
       break;
     }
@@ -55,7 +55,6 @@ __FAILED:
 }
 
 extern "C" void DestroyRKCodec2Factory(::C2ComponentFactory* factory) {
-    c2_log_func_enter();
     delete factory;
 }
 

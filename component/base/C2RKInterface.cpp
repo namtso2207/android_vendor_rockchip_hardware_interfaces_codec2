@@ -306,18 +306,4 @@ void C2RKInterface<void>::BaseParams::noTimeStretch() {
             .build());
 }
 
-/*
-    Clients need to handle the following base params due to custom dependency.
-
-    std::shared_ptr<C2ApiLevelSetting> mApiLevel;
-    std::shared_ptr<C2ApiFeaturesSetting> mApiFeatures;
-    std::shared_ptr<C2ComponentAttributesSetting> mAttrib;
-
-    std::shared_ptr<C2PortSuggestedBufferCountTuning::input> mSuggestedInputBufferCount;
-    std::shared_ptr<C2PortSuggestedBufferCountTuning::output> mSuggestedOutputBufferCount;
-
-    std::shared_ptr<C2TrippedTuning> mTripped;
-
-*/
-
 } // namespace android

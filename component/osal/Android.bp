@@ -1,0 +1,53 @@
+cc_library_headers {
+    name: "libcodec2_rk_osal_headers",
+    vendor: true,
+    export_include_dirs: [
+        "include",
+        "include/mpp",
+    ],
+}
+
+cc_library_static {
+    name: "libcodec2_rk_osal",
+    vendor: true,
+
+    srcs: [
+        "C2RKChipCapDef.cpp",
+        "C2RKLog.cpp",
+        "C2RKDump.cpp",
+        "C2RKRgaDef.cpp",
+        "C2RKMediaUtils.cpp",
+        "C2RKGrallocOrigin.cpp",
+        "C2RKGralloc4.cpp",
+        "C2RKGrallocOps.cpp",
+        "C2RKVdecExtendFeature.cpp",
+        "C2RKMemTrace.cpp",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libui",
+        "libutils",
+        "libhardware",
+        "libstagefright_foundation",
+        "libsfplugin_ccodec_utils",
+        "android.hardware.graphics.mapper@4.0",
+        "libhidlbase",
+        "librga",
+    ],
+
+    export_shared_lib_headers: [
+        "libui",
+    ],
+
+    header_libs: [
+        "libhardware_rockchip_headers",
+        "libcodec2_headers",
+        "libcodec2_rk_osal_headers",
+    ],
+
+    include_dirs: [
+        "hardware/rockchip/librga/include",
+        "hardware/rockchip/librga/im2d_api",
+    ],
+}
